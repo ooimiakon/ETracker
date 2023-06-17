@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2022/xaml/maui"
+             x:Class="ETracker.StaticPage"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#fafafa"
+             >
+
+<StackLayout>
+      <Label Text="月度统计" FontSize="24" HorizontalOptions="Center" Margin="0,20,0,20" />
+
+        <!-- 选择月份的控件 -->
+
+        <Grid Grid.Row="2" Margin="0,0,0,30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label Text="年份" VerticalOptions="Center" WidthRequest="40" />
+            <Entry Placeholder="请输入年份" Keyboard="Numeric" x:Name="YearEntry" Grid.Column="1" HorizontalOptions="FillAndExpand" />
+            <Label Text="月份" VerticalOptions="Center" WidthRequest="40" Grid.Column="2" />
+            <Entry Placeholder="请输入月份" Keyboard="Numeric" x:Name="MonthEntry" Grid.Column="3" HorizontalOptions="FillAndExpand" />
+            <Button Text="确定" Clicked="ConfirmButton_Clicked" Grid.Column="4" WidthRequest="60" />
+           </Grid>
+
+
+         <Label Text="{Binding Result}"  />
+
+        <telerik:RadPieChart>
+          <telerik:RadPieChart.Series>
+              <telerik:PieSeries ShowLabels="True"
+                                 RadiusFactor="0.8"
+                                 ValueBinding="Value"
+                                 ItemsSource="{Binding Data}" />
+          </telerik:RadPieChart.Series>
+        </telerik:RadPieChart>
+    </StackLayout>
+
+</ContentPage>

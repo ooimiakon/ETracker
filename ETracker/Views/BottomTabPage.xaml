@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:local="clr-namespace:ETracker"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ETracker.BottomTabPage"
+             xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+             android:TabbedPage.ToolbarPlacement="Bottom"
+             BarBackgroundColor="#F9F4E3"
+             BarTextColor="{StaticResource TabBarUnselectedColor}"
+             SelectedTabColor="{StaticResource TabBarSelectedColor}">
+
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+            <!-- 自定义样式 -->
+            <!-- 主题色 -->
+            <Color x:Key="TabBarSelectedColor">#e8bc65</Color> <!-- 选中时的颜色 -->
+            <Color x:Key="TabBarUnselectedColor">Black</Color> <!-- 未选中时的颜色 -->
+            
+        </ResourceDictionary>
+    </TabbedPage.Resources>
+
+    <NavigationPage Title="主页"
+                    IconImageSource="home.png"
+                    >
+        <x:Arguments>
+            <local:MainPage/>
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="记录"
+                    IconImageSource="add.png"
+                    >
+        <x:Arguments>
+            <local:AddExpensePage/>
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="统计"
+                    IconImageSource="charts.png"
+                    >
+        <x:Arguments>
+            <local:StaticPage/>
+        </x:Arguments>
+    </NavigationPage>
+</TabbedPage>
+
+

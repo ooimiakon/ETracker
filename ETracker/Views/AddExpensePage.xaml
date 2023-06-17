@@ -1,0 +1,88 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ETracker.AddExpensePage"
+             Title="Add Expense"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#fafafa">
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+             <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label Text="新增记录" FontSize="24" HorizontalOptions="Center" Margin="0,0,0,20" Grid.Row="0" />
+
+        <Grid Grid.Row="1" Margin="0,0,0,30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="标题" VerticalOptions="Center" WidthRequest="80" />
+            <Entry Placeholder="请输入标题" x:Name="TitleEntry" Grid.Column="1" />
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="0,0,0,30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label Text="收支类型" VerticalOptions="Center" WidthRequest="80" />
+            <StackLayout Grid.Column="1" Orientation="Horizontal" Spacing="20">
+                <Label Text="支出" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+                <Switch x:Name="IsExpenseSwitch" VerticalOptions="Center" HorizontalOptions="EndAndExpand"
+                                    Toggled="IsExpenseSwitch_Toggled" />
+                <Label Text="收入" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+            </StackLayout>
+        </Grid>
+
+        <Grid Grid.Row="3" Margin="0,0,0,30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="金额" VerticalOptions="Center" WidthRequest="80" />
+            <Entry Placeholder="请输入金额" Keyboard="Numeric" x:Name="AmountEntry" Grid.Column="1" />
+        </Grid>
+
+        <Grid Grid.Row="4" Margin="0,0,0,30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="时间" VerticalOptions="Center" WidthRequest="80" />
+            <DatePicker Format="yyyy-MM-dd" x:Name="TimePicker" Grid.Column="1" />
+        </Grid>
+
+        <Grid Grid.Row="5" Margin="0,0,0,30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label Text="种类" VerticalOptions="Center" WidthRequest="80" />
+            <Picker x:Name="CategoryPicker" Grid.Column="1"
+                    ItemsSource="{Binding Categories}"
+                    SelectedItem="{Binding SelectedCategory}">
+            </Picker>
+            <Button Grid.Column="2" Text="清空" Clicked="ClearSelection_Clicked" />
+        </Grid>
+
+
+        <Grid Grid.Row="6" Margin="0,0,0,30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="描述" VerticalOptions="Center" WidthRequest="80" />
+            <Entry Placeholder="请输入描述" x:Name="ContentEntry" Grid.Column="1" />
+        </Grid>
+
+        <Button Text="保存" Clicked="SaveButton_Clicked" Margin="0,30,0,0" Grid.Row="7" BackgroundColor="#fbe6b8" />
+    </Grid>
+</ContentPage>
