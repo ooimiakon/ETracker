@@ -6,9 +6,9 @@
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#fafafa"
              >
-
-<StackLayout>
-      <Label Text="月度统计" FontSize="24" HorizontalOptions="Center" Margin="0,20,0,20" />
+      <ScrollView Orientation="Vertical">
+<StackLayout Margin="30,10,30,10">
+      <Label Text="月度统计" FontSize="24" HorizontalOptions="Center" Margin="0,0,0,30"/>
 
         <!-- 选择月份的控件 -->
 
@@ -28,16 +28,55 @@
            </Grid>
 
 
-         <Label Text="{Binding Result}"  />
+            <Label Text="月支出变化"  />
+        <telerik:RadCartesianChart>
+              <telerik:RadCartesianChart.HorizontalAxis>
+                  <telerik:CategoricalAxis LabelFitMode="MultiLine" />
+              </telerik:RadCartesianChart.HorizontalAxis>
+              <telerik:RadCartesianChart.VerticalAxis>
+                  <telerik:NumericalAxis LabelFitMode="MultiLine" />
+              </telerik:RadCartesianChart.VerticalAxis>
+              <telerik:RadCartesianChart.Series>
+                  <telerik:BarSeries ValueBinding="Amount"
+                                          CategoryBinding="Day"
+                                          ItemsSource="{Binding Expense}" />
+              </telerik:RadCartesianChart.Series>
+            </telerik:RadCartesianChart>
 
-        <telerik:RadPieChart>
-          <telerik:RadPieChart.Series>
-              <telerik:PieSeries ShowLabels="True"
-                                 RadiusFactor="0.8"
-                                 ValueBinding="Value"
-                                 ItemsSource="{Binding Data}" />
-          </telerik:RadPieChart.Series>
-        </telerik:RadPieChart>
+             <Label Text="月支出各类消费占比"  />
+                <telerik:RadPieChart x:Name="pieChart">
+                  <telerik:RadPieChart.Series>
+                      <telerik:PieSeries ShowLabels="True"
+                                         RadiusFactor="0.8"
+                                         ValueBinding="Amount"
+                                         DisplayName="Amount"
+                                         LegendTitleBinding="CategoryName"
+                                         ItemsSource="{Binding Data}" />
+                  </telerik:RadPieChart.Series>
+                </telerik:RadPieChart>
+                <telerik:RadLegend HeightRequest="80" 
+                           LegendItemFontColor="Gray"
+                           LegendItemFontSize="20"
+                           LegendProvider="{x:Reference Name=pieChart}"/>
+
+            <Label Text="月收入各类收入占比"  />
+                <telerik:RadPieChart x:Name="pieChart2">
+                  <telerik:RadPieChart.Series>
+                      <telerik:PieSeries ShowLabels="True"
+                                         RadiusFactor="0.8"
+                                         ValueBinding="Amount"
+                                         DisplayName="Amount"
+                                         LegendTitleBinding="CategoryName"
+                                         ItemsSource="{Binding Income}" />
+                  </telerik:RadPieChart.Series>
+                </telerik:RadPieChart>
+                <telerik:RadLegend HeightRequest="80" 
+                           LegendItemFontColor="Gray"
+                           LegendItemFontSize="20"
+                           LegendProvider="{x:Reference Name=pieChart2}"/>
+
+
     </StackLayout>
+      </ScrollView>
 
 </ContentPage>

@@ -11,7 +11,6 @@ public partial class StaticPage : ContentPage
 		InitializeComponent();
         _viewModel= new StaticViewModel();
         BindingContext = _viewModel;
-        _viewModel.Test();
     }
 
     private void ConfirmButton_Clicked(object sender, EventArgs e)

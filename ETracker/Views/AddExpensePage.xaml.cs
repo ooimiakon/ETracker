@@ -1,11 +1,22 @@
 ﻿namespace ETracker;
 using ETracker.Models;
 using ETracker.ViewModels;
-
+using System.Net.Http;
+using System.Net.Http.Json;
 
 public partial class AddExpensePage : ContentPage
 {
-	public AddExpensePage()
+    public class RecordDetail
+    {
+        public string CategoryName { get; set; }
+        public int UserId { get; set; }
+        public string RecordTitle { get; set; }
+        public double RecordAmount { get; set; }
+        public bool RecordIsExpensrecordIsExpensrecordIsExpens { get; set; }
+        public string RecordContent { get; set; }
+    }
+
+    public AddExpensePage()
 	{
 		InitializeComponent();
         BindingContext =new AddExpensePageViewModel();
@@ -25,6 +36,13 @@ public partial class AddExpensePage : ContentPage
         };
 
         // Perform any additional logic or save the expense item to a database
+        HttpClient client = new HttpClient();
+
+        //HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Post, url);
+        //message.Content = JsonContent.Create<RecordDetail>(recordDetail);
+
+        //HttpResponseMessage response = await client.SendAsync(message);
+
 
         // 清空输入框
         TitleEntry.Text = string.Empty;

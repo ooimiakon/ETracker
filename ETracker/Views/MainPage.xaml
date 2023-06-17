@@ -189,7 +189,7 @@
                         <Label Grid.Row="1"  Grid.Column="1" Text="{Binding amount}" FontAttributes="Bold" FontSize="15"
                             HorizontalTextAlignment="Start" VerticalOptions="Center" FontFamily="LatoBold" Margin="0,0,0,10" />
 
-                        <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Text="详情" BackgroundColor="#e8bc65"
+                        <Button Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Text="删除" BackgroundColor="#E0604E"
                             HeightRequest="30">
                             <Button.Padding>
                                 <OnPlatform x:TypeArguments="Thickness">

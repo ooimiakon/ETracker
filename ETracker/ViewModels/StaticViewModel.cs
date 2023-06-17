@@ -1,92 +1,199 @@
 ﻿using System.Collections.ObjectModel;
+using System.Text.Json;
+using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace ETracker.ViewModels;
 
 
 public class StaticViewModel : BaseViewModel
 {
-    private List<DailyExpenseItem> _dailyExpenseList;
     private readonly HttpClient _client;
-    private string _result;
-    public ObservableCollection<CategoricalData> Data { get; set; }
-
-    private static ObservableCollection<CategoricalData> GetCategoricalData()
-    {
-        var data = new ObservableCollection<CategoricalData>  {
-            new CategoricalData { Category = "A", Value = 0.63 },
-            new CategoricalData { Category = "B", Value = 0.85 },
-            new CategoricalData { Category = "C", Value = 1.05 },
-            new CategoricalData { Category = "D", Value = 0.96 },
-            new CategoricalData { Category = "E", Value = 0.78 },
-        };
-
-        return data;
-    }
-
-
-    public string Result
-    {
-        get => _result;
-        set
-        {
-            if (_result == value) return;
-            _result = value;
-            OnPropertyChanged(nameof(Result));
-        }
-    }
+    private ObservableCollection<CategoricalData> _date { get; set; }
+    private ObservableCollection<CategoricalData> _income { get; set; }
+    public ObservableCollection<DailyExpenseItem> _expense { get; set; }
 
     public StaticViewModel()
     {
-        Init();
-        this.Data = GetCategoricalData();
         _client = new HttpClient();
+        update();
     }
 
-    public List<DailyExpenseItem> dailyExpenseList
+
+    private void update()
     {
-        get => _dailyExpenseList;
+        GetCategoricalData();
+        GetExpenseData();
+        GetCategoricalIncome();
+    }
+
+    public ObservableCollection<CategoricalData> Data
+    {
+        get => _date;
         set
         {
-            if (_dailyExpenseList == value) return;
-            _dailyExpenseList = value;
-            OnPropertyChanged(nameof(dailyExpenseList));
+            if (_date == value) return;
+            _date = value;
+            OnPropertyChanged(nameof(Data));
         }
-
     }
 
-    public void Test()
+    public ObservableCollection<CategoricalData> Income
     {
-        var response = _client.GetStringAsync("http://47.96.94.96:3300/api/Finance/GetDonateCount").Result;
-        Result= response;
-    }
-
-    private void Init()
-    {
-        dailyExpenseList = new List<DailyExpenseItem>(); // 实例化 expenseList
-
-        dailyExpenseList.Add(new DailyExpenseItem(new DateTime(2023, 6, 1), 42));
-        dailyExpenseList.Add(new DailyExpenseItem(new DateTime(2023, 6, 2), 42));
-        dailyExpenseList.Add(new DailyExpenseItem(new DateTime(2023, 6, 3), 52));
-        dailyExpenseList.Add(new DailyExpenseItem(new DateTime(2023, 6, 4), 12));
-    }
-
-
-
-    public class DailyExpenseItem
-    {
-        public DateTime day { get; set; }
-        public double value { get; set; }
-
-        public DailyExpenseItem(DateTime day, double value)
+        get => _income;
+        set
         {
-            this.day = day;
-            this.value = value;
+            if (_income == value) return;
+            _income = value;
+            OnPropertyChanged(nameof(Income));
         }
     }
+
+    public ObservableCollection<DailyExpenseItem> Expense
+    {
+        get => _expense;
+        set
+        {
+            if (_expense == value) return;
+            _expense = value;
+            OnPropertyChanged(nameof(Expense));
+        }
+    }
+
+    private async void GetExpenseData()
+    {
+        // 解析 JSON
+        var response = await _client.GetStringAsync("http://118.89.122.162/api/Stats/GetExpenseByDate?user_id=1");
+        var responseObject = JsonSerializer.Deserialize<ResponseObject<ResponseExpense>>(response);
+
+        // 检查响应状态和错误码
+        if (responseObject.status)
+        {
+            // 获取解析后的数据
+            var result = responseObject.data.result;
+
+            // 将解析后的数据转换为 List<CategoricalData>
+            var expense = new ObservableCollection<DailyExpenseItem>();
+            foreach (var item in result)
+            {
+                var dailyExpenseItem = new DailyExpenseItem
+                {
+                    Day = item.Day,
+                    Amount = item.Amount
+                };
+                expense.Add(dailyExpenseItem);
+            }
+            Expense = expense;
+        }
+
+    }
+
+
+    private async void GetCategoricalData()
+    {
+        // 解析 JSON
+        var response = await _client.GetStringAsync("http://118.89.122.162/api/Stats/GetExpenseByCategory?user_id=1");
+        var responseObject = JsonSerializer.Deserialize<ResponseObject<ResponseData>>(response);
+
+        // 检查响应状态和错误码
+        if (responseObject.status)
+        {
+            // 获取解析后的数据
+            var result = responseObject.data.result;
+
+            // 将解析后的数据转换为 List<CategoricalData>
+            var data = new ObservableCollection<CategoricalData>();
+            foreach (var item in result)
+            {
+                var categoricalData = new CategoricalData
+                {
+                    CategoryName = item.CategoryName,
+                    Amount = item.Amount
+                };
+                data.Add(categoricalData);
+            }
+            Data = data;
+        }
+        /*
+        var expense = new ObservableCollection<DailyExpenseItem>  {
+            new DailyExpenseItem{Day="2023-6-17",Amount=30},
+            new DailyExpenseItem{Day="2023-6-18",Amount=30},
+            new DailyExpenseItem{Day="2023-6-19",Amount=30},
+        };
+
+        return expense;*/
+    }
+
+    private async void GetCategoricalIncome()
+    {
+        // 解析 JSON
+        var response = await _client.GetStringAsync("http://118.89.122.162/api/Stats/getIncomeByCategory?user_id=1");
+        var responseObject = JsonSerializer.Deserialize<ResponseObject<ResponseData>>(response);
+
+        // 检查响应状态和错误码
+        if (responseObject.status)
+        {
+            // 获取解析后的数据
+            var result = responseObject.data.result;
+
+            // 将解析后的数据转换为 List<CategoricalData>
+            var income = new ObservableCollection<CategoricalData>();
+            foreach (var item in result)
+            {
+                var categoricalData = new CategoricalData
+                {
+                    CategoryName = item.CategoryName,
+                    Amount = item.Amount
+                };
+                income.Add(categoricalData);
+            }
+            Income = income;
+        }
+    }
+
+
+
 }
 
 public class CategoricalData
 {
-    public object Category { get; set; }
-    public double Value { get; set; }
+    public string CategoryName { get; set; }
+    public double Amount { get; set; }
 }
+
+public class DailyExpenseItem
+{
+    public string Day { get; set; }
+    public double Amount { get; set; }
+}
+
+// 定义用于解析 JSON 的对象模型
+public class ResponseObject<T>
+{
+    public int errorCode { get; set; }
+    public bool status { get; set; }
+    public T data { get; set; }
+}
+
+public class ResponseData
+{
+    public List<CategoricalData> result { get; set; }
+}
+
+public class ResponseExpense
+{
+    public List<DailyExpenseItem> result { get; set; }
+}
+
+//private static ObservableCollection<DailyExpenseItem> GetExpenseData()
+//{
+//    var expense = new ObservableCollection<DailyExpenseItem>  {
+//        new DailyExpenseItem{Day="2023-6-17",Amount=30},
+//        new DailyExpenseItem{Day="2023-6-18",Amount=30},
+//        new DailyExpenseItem{Day="2023-6-19",Amount=30},
+//    };
+
+//    return expense;
+//}
+
+
+
