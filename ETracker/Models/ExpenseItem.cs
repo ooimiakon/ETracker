@@ -3,6 +3,7 @@ namespace ETracker.Models
 {
 	public class ExpenseItem
 	{
+        public long recordID { get; set; }
         public string title { get; set; }
         public double amount { get; set; }
         public string time { get; set; }

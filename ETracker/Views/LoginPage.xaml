@@ -16,20 +16,20 @@
 
         <VerticalStackLayout Grid.Row="1" Spacing="10">
 
-            <Label Text="Log In To Medicoer" FontSize="20" TextColor="Black" FontAttributes="Bold" Margin="0,0,0,20"
+            <Label Text="Log In To ETracker" FontSize="20" TextColor="Black" FontAttributes="Bold" Margin="0,0,0,20"
                    HorizontalOptions="Center"/>
 
-            <Label Text="Your Email"/>
+            <Label Text="Account Number"/>
 
-            <Entry Placeholder="youremail@domain.com" Keyboard="Email" />
+            <Entry Placeholder="not user id" Keyboard="Numeric" Text="{Binding Account}" />
 
             <Label Text="Password"/>
 
-            <Entry Placeholder="password" IsPassword="True"/>
+            <Entry Placeholder="password" IsPassword="True" Text="{Binding Password}" />
 
             <Label Text="Forgot password?" HorizontalOptions="End" TextColor="Gray" FontSize="Small"/>
 
-            <Button Text="Log In" BackgroundColor="#e8bc65" Margin="0,10,0,0" Command="{Binding ICommandNavToHomePage}"/>
+            <Button Text="Log In" BackgroundColor="#e8bc65" Margin="0,10,0,0" Command="{Binding LoginCommand}"/>
 
             <Label HorizontalOptions="CenterAndExpand" Margin="0,10,0,0">
 

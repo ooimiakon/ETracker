@@ -1,9 +1,14 @@
-﻿namespace ETracker.Views;
+﻿using System.ComponentModel;
+using ETracker.ViewModels;
+
+namespace ETracker.Views;
 
 public partial class LoginPage : ContentPage
 {
-	public LoginPage()
+    public LoginPage()
 	{
 		InitializeComponent();
-	}
+        BindingContext = new LoginPageViewModel();
+    }
+
 }

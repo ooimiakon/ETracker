@@ -19,7 +19,7 @@ public class StaticViewModel : BaseViewModel
     }
 
 
-    private void update()
+    public void update()
     {
         GetCategoricalData();
         GetExpenseData();

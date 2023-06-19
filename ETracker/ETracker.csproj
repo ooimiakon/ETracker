@@ -62,6 +62,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Telerik.UI.for.Maui.Trial" Version="5.2.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -90,6 +91,7 @@
 	  <None Remove="Resources\Images\home.png" />
 	  <None Remove="Resources\Images\add.png" />
 	  <None Remove="Resources\Images\charts.png" />
+	  <None Remove="Resources\Images\icon.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Models\" />
@@ -122,6 +124,7 @@
 	  <BundleResource Include="Resources\Images\add.png" />
 	  <BundleResource Include="Resources\Images\charts.png" />
 	  <BundleResource Include="Resources\Images\charts.png" />
+	  <BundleResource Include="Resources\Images\icon.png" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0-ios'">
 	  <PackageReference Include="DevExpress.Maui.Charts" Version="23.1.3" />

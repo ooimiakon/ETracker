@@ -24,7 +24,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label Text="标题" VerticalOptions="Center" WidthRequest="80" />
-            <Entry Placeholder="请输入标题" x:Name="TitleEntry" Grid.Column="1" />
+            <Entry Placeholder="请输入标题" x:Name="TitleEntry" Grid.Column="1" Text="{Binding Title}" />
         </Grid>
 
         <Grid Grid.Row="2" Margin="0,0,0,30">
@@ -34,10 +34,10 @@
             </Grid.ColumnDefinitions>
             <Label Text="收支类型" VerticalOptions="Center" WidthRequest="80" />
             <StackLayout Grid.Column="1" Orientation="Horizontal" Spacing="20">
-                <Label Text="支出" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+                <Label Text="收入" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
                 <Switch x:Name="IsExpenseSwitch" VerticalOptions="Center" HorizontalOptions="EndAndExpand"
                                     Toggled="IsExpenseSwitch_Toggled" />
-                <Label Text="收入" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+                <Label Text="支出" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
             </StackLayout>
         </Grid>
 
@@ -47,7 +47,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label Text="金额" VerticalOptions="Center" WidthRequest="80" />
-            <Entry Placeholder="请输入金额" Keyboard="Numeric" x:Name="AmountEntry" Grid.Column="1" />
+            <Entry Placeholder="请输入金额" Keyboard="Numeric" x:Name="AmountEntry" Grid.Column="1" Text="{Binding Amount}"/>
         </Grid>
 
         <Grid Grid.Row="4" Margin="0,0,0,30">
@@ -56,7 +56,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label Text="时间" VerticalOptions="Center" WidthRequest="80" />
-            <DatePicker Format="yyyy-MM-dd" x:Name="TimePicker" Grid.Column="1" />
+                <DatePicker x:Name="TimePicker" Grid.Column="1" Format="yyyy-MM-dd" Date="{Binding Time}" />
         </Grid>
 
         <Grid Grid.Row="5" Margin="0,0,0,30">
@@ -80,9 +80,9 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Label Text="描述" VerticalOptions="Center" WidthRequest="80" />
-            <Entry Placeholder="请输入描述" x:Name="ContentEntry" Grid.Column="1" />
+            <Entry Placeholder="请输入描述" x:Name="ContentEntry" Grid.Column="1" Text="{Binding Content}"  />
         </Grid>
 
-        <Button Text="保存" Clicked="SaveButton_Clicked" Margin="0,30,0,0" Grid.Row="7" BackgroundColor="#fbe6b8" />
+        <Button Text="保存" Command="{Binding SaveCommand}" Margin="0,30,0,0" Grid.Row="7" BackgroundColor="#fbe6b8" />
     </Grid>
 </ContentPage>

@@ -2,6 +2,8 @@
 using System.Text.Json;
 using System.Net.Http;
 using ETracker.Models;
+using System.Windows.Input;
+using Newtonsoft.Json;
 
 namespace ETracker.ViewModels
 {
@@ -12,12 +14,16 @@ namespace ETracker.ViewModels
         private Total _total;
         private readonly HttpClient _client;
         private string _result;
+        //public ICommand DeleteRecordCommand { get; set; }
+
 
 
         public MainPageViewModel()
         {
             _client = new HttpClient();
             Init();
+            //DeleteRecordCommand = new Command<long>(async (recordId) => await DeleteRecord(recordId));
+            //DeleteRecordCommand = new Command<long>(async (recordId) => await DeleteRecord(recordId));
         }
 
         public Total total
@@ -66,7 +72,29 @@ namespace ETracker.ViewModels
                 OnPropertyChanged(nameof(expenseList));
             }
         }
-        private async void Init()
+        /*
+        private async Task DeleteRecord(long recordId)
+        {
+            var url = $"http://118.89.122.162/api/Record/DeleteRecord?record_id={recordId}";
+            HttpResponseMessage response = await _client.DeleteAsync(url);
+
+            string responseBody = await response.Content.ReadAsStringAsync();
+
+            var responseObject = JsonConvert.DeserializeObject<ApiResponse>(responseBody);
+            if (responseObject.errorCode == 200 && responseObject.status == true)
+            {
+                // 删除成功，根据需要执行其他操作
+                await App.Current.MainPage.DisplayAlert("成功", "删除成功", "确定");
+                Init();
+            }
+            else
+            {
+                await App.Current.MainPage.DisplayAlert("失败", "删除失败", "确定");
+            }
+        }
+        */
+
+        public async void Init()
         {
 
             //expenseList = new List<ExpenseItem>(); // 实例化 expenseList
@@ -121,7 +149,7 @@ namespace ETracker.ViewModels
             // 解析 JSON 字符串为对象
             string jsonString = await _client.GetStringAsync("http://118.89.122.162/api/Record/GetAllRecord?user_id=1");
 
-            var response3 = JsonSerializer.Deserialize<ExpenseListResponse>(jsonString);
+            var response3 = JsonConvert.DeserializeObject<ExpenseListResponse>(jsonString);
 
             // 提取记录列表并转换为 ExpenseItem 对象列表
             expenseList = response3.data.record_list;
@@ -161,4 +189,10 @@ namespace ETracker.ViewModels
             public ExpenseListData data { get; set; }
         }
     }
+}
+public class ApiResponse
+{
+    public int errorCode { get; set; }
+    public bool status { get; set; }
+    public object data { get; set; }
 }
